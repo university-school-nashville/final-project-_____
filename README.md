@@ -4,7 +4,7 @@ final-project-_____ created by GitHub Classroom
 This is a project I am working on by myself that is a game where I make a Cat and Mouse type game. 
 The player will control either the mouse or cat that will interact with the ai controlled enemy. 
 If the mouse is chosen, the player will have to run away from the cat for as long as possible while the cat gets faster over time.
-The mouse will aaso have to retrieve the pieces of cheese scattered around the map.
+The mouse will also have to retrieve the pieces of cheese scattered around the map.
 If the cat is chosen, the player will have to chase the runaway mouse as fast as possible while avoiding traps.
 The mouse will start off with 3 lives and lose one each time it is caught by the cat.
 However, if the mouse is able to survive a ceratin amount of time it will either gain a life or a short speed boost.
