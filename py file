@@ -1,1 +1,48 @@
-import pygame
+# making turtle window
+import turtle
+window = turtle.getscreen()
+window.title('Cat and Mouse!')
+window.bgcolor('PaleGreen')
+
+#creating variables
+mouse = turtle.Turtle()
+cat = turtle.Turtle()
+
+#defiing variable characteristics
+mouse.up()
+mouse.fillcolor('Blue')
+mouse.shape('circle')
+cat.up()
+cat.fillcolor('Red')
+cat.shape('square')
+
+#setting variable locations
+mouse.goto(100, 0)
+cat.goto(-100, 0)
+
+#setting variable basic movement
+def Up():
+    mouse.tiltangle(90)
+    mouse.forward(10)
+def Down():
+    mouse.tiltangle(270)
+    mouse.forward(10)
+def Left():
+    mouse.tiltangle(180)
+    mouse.forward(10)
+def Right():
+    mouse.tiltangle(0)
+    mouse.forward(10)
+def quit():
+    window.bye()
+    
+#calling my functions
+window.onkey(Up, "Up")
+window.onkey(Down, "Down")
+window.onkey(Left, "Left")
+window.onkey(Right, "Right")
+window.onkey(quit, "space")
+
+window.update()
+window.listen()
+turtle.done()
