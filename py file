@@ -7,48 +7,66 @@ window.bgcolor('PaleGreen')
 #creating variables
 mouse = turtle.Turtle()
 cat = turtle.Turtle()
+obstacle1 = turtle.Turtle()
+obstacle2 = turtle.Turtle()
+obstacle3 = turtle.Turtle()
 
-#defiing variable characteristics
+#defiing user and ai characteristics
 mouse.up()
 mouse.fillcolor('Blue')
 mouse.shape('circle')
+mouse.speed("fastest")
 cat.up()
 cat.fillcolor('Red')
 cat.shape('square')
+cat.speed("fastest")
+
+#defining obstacle characteristics
+obstacle1.up()
+obstacle1.fillcolor("Black")
+obstacle2.up()
+obstacle2.fillcolor("Black")
+obstacle3.up()
+obstacle3.fillcolor("Black")
 
 #setting variable locations
 mouse.goto(100, 0)
 cat.goto(-100, 0)
 
+#setting obstacle locations
+obstacle1.goto()
+obstacle2.goto()
+obstacle3.goto()
+
 #setting variable basic movement
 def Up():
     mouse.setheading(90)
-    mouse.forward(10)
+    mouse.forward(5)
 def Down():
     mouse.setheading(270)
-    mouse.forward(10)
+    mouse.forward(5)
 def Left():
     mouse.setheading(180)
-    mouse.forward(10)
+    mouse.forward(5)
 def Right():
     mouse.setheading(0)
-    mouse.forward(10)
+    mouse.forward(5)
     
 def follow_runner():
     cat.setheading(cat.towards(mouse))
-    cat.forward(1)
+    cat.forward(0.5)
     window.ontimer(follow_runner, 10)
     
 def quit():
     window.bye()
     
 #calling my functions
-window.onkey(Up, "w")
-window.onkey(Down, "s")
-window.onkey(Left, "a")
-window.onkey(Right, "d")
-follow_runner()
+window.onkeypress(Up, "Up")
+window.onkeypress(Down, "Down")
+window.onkeypress(Left, "Left")
+window.onkeypress(Right, "Right")
 window.onkey(quit, "space")
+follow_runner()
 
 window.update()
 window.listen()
