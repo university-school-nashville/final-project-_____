@@ -22,25 +22,32 @@ cat.goto(-100, 0)
 
 #setting variable basic movement
 def Up():
-    mouse.tiltangle(90)
+    mouse.setheading(90)
     mouse.forward(10)
 def Down():
-    mouse.tiltangle(270)
+    mouse.setheading(270)
     mouse.forward(10)
 def Left():
-    mouse.tiltangle(180)
+    mouse.setheading(180)
     mouse.forward(10)
 def Right():
-    mouse.tiltangle(0)
+    mouse.setheading(0)
     mouse.forward(10)
+    
+def follow_runner():
+    cat.setheading(cat.towards(mouse))
+    cat.forward(1)
+    window.ontimer(follow_runner, 10)
+    
 def quit():
     window.bye()
     
 #calling my functions
-window.onkey(Up, "Up")
-window.onkey(Down, "Down")
-window.onkey(Left, "Left")
-window.onkey(Right, "Right")
+window.onkey(Up, "w")
+window.onkey(Down, "s")
+window.onkey(Left, "a")
+window.onkey(Right, "d")
+follow_runner()
 window.onkey(quit, "space")
 
 window.update()
