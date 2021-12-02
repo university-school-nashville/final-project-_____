@@ -1,64 +1,141 @@
 # making turtle window
+import random
 import turtle
 window = turtle.getscreen()
+window.screensize = (300, 300)
 window.title('Cat and Mouse!')
 window.bgcolor('PaleGreen')
+window.register_shape('bluemouse.gif')
+window.register_shape('redcat.gif')
+window.register_shape('mousetrap.gif')
+window.register_shape('cheese.gif')
+
+#drawing a border
+turtle.ht()
+turtle.up()
+turtle.goto(300, 300)
+turtle.down()
+for i in range(4):
+    turtle.rt(90)
+    turtle.forward(600)
 
 #creating variables
 mouse = turtle.Turtle()
 cat = turtle.Turtle()
-obstacle1 = turtle.Turtle()
-obstacle2 = turtle.Turtle()
-obstacle3 = turtle.Turtle()
+mousetrap1 = turtle.Turtle()
+mousetrap2 = turtle.Turtle()
+mousetrap3 = turtle.Turtle()
+cheese = turtle.Turtle()
 
 #defiing user and ai characteristics
 mouse.up()
 mouse.fillcolor('Blue')
-mouse.shape('circle')
+mouse.shape('bluemouse.gif')
 mouse.speed("fastest")
 cat.up()
 cat.fillcolor('Red')
-cat.shape('square')
+cat.shape('redcat.gif')
 cat.speed("fastest")
 
-#defining obstacle characteristics
-obstacle1.up()
-obstacle1.fillcolor("Black")
-obstacle2.up()
-obstacle2.fillcolor("Black")
-obstacle3.up()
-obstacle3.fillcolor("Black")
+#defining mousetrap characteristics
+mousetrap1.up()
+mousetrap1.shape("mousetrap.gif")
+mousetrap2.up()
+mousetrap2.shape("mousetrap.gif")
+mousetrap3.up()
+mousetrap3.shape("mousetrap.gif")
+
+#defining cheese characteristics
+cheese.up()
+cheese.shape('cheese.gif')
 
 #setting variable locations
 mouse.goto(100, 0)
 cat.goto(-100, 0)
 
-#setting obstacle locations
-obstacle1.goto()
-obstacle2.goto()
-obstacle3.goto()
+#setting mousetrap locations
+mousetrap1.goto(100, 175)
+mousetrap2.goto(-100, -60)
+mousetrap3.goto(0, -250)
+
+#setting cheese locations
+cheese.goto(-100, 100)
+
+#code to keep the mouse within the borders
+def border():
+    if mouse.xcor() >= 300:
+        mouse.goto(300, mouse.ycor())
+    if mouse.ycor() >= 300:
+        mouse.goto(mouse.xcor(), 300)
+    if mouse.xcor() <= -300:
+        mouse.goto(-300, mouse.ycor())
+    if mouse.ycor() <= -300:
+        mouse.goto(mouse.xcor(), -300)
+
+#code to close the window if the mouse hits a trap       
+def traps():
+    if mouse.xcor() == mousetrap1.xcor() and mouse.ycor() == mousetrap1.ycor():
+        window.bye()
+    if mouse.xcor() == mousetrap2.xcor() and mouse.ycor() == mousetrap2.ycor():
+        window.bye()
+    if mouse.xcor() == mousetrap3.xcor() and mouse.ycor() == mousetrap3.ycor():
+        window.bye()
+        
+#code to collect the cheese
+def get_cheese():
+    if mouse.xcor() == cheese.xcor() and mouse.ycor() == cheese.ycor():
+        cheese.ht()
+        cheese.goto(random.randint(-300, 300), random.randint(-300, 300))
+        cheese.st()
+        
+#code to end the game when the mouse is caught
+def eat_mouse():
+    if mouse.xcor() == cat.xcor() and mouse.ycor() == cat.ycor():
+        window.bye()
 
 #setting variable basic movement
 def Up():
     mouse.setheading(90)
-    mouse.forward(5)
+    mouse.forward(10)
+    border()
+    traps()
+    eat_mouse()
+    get_cheese()
 def Down():
     mouse.setheading(270)
-    mouse.forward(5)
+    mouse.forward(10)
+    border()
+    traps()
+    eat_mouse
+    get_cheese()
 def Left():
     mouse.setheading(180)
-    mouse.forward(5)
+    mouse.forward(10)
+    border()
+    traps()
+    eat_mouse()
+    get_cheese()
 def Right():
     mouse.setheading(0)
-    mouse.forward(5)
+    mouse.forward(10)
+    border()
+    traps()
+    eat_mouse()
+    get_cheese()
     
 def follow_runner():
     cat.setheading(cat.towards(mouse))
-    cat.forward(0.5)
+    cat.forward(1)
     window.ontimer(follow_runner, 10)
     
 def quit():
     window.bye()
+
+#setting score/cheese text variable
+turtle.goto(-300, 300)
+turtle.write("Score: 0")
+turtle.goto(-300, 290)
+turtle.write('Cheeses: 0')
     
 #calling my functions
 window.onkeypress(Up, "Up")
@@ -67,6 +144,10 @@ window.onkeypress(Left, "Left")
 window.onkeypress(Right, "Right")
 window.onkey(quit, "space")
 follow_runner()
+border()
+traps()
+eat_mouse()
+get_cheese()
 
 window.update()
 window.listen()
