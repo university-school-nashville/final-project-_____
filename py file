@@ -9,6 +9,8 @@ window.register_shape('bluemouse.gif')
 window.register_shape('redcat.gif')
 window.register_shape('mousetrap.gif')
 window.register_shape('cheese.gif')
+window.register_shape('gameover.gif')
+window.tracer(0, 0)
 
 #drawing a border
 turtle.ht()
@@ -26,6 +28,7 @@ mousetrap1 = turtle.Turtle()
 mousetrap2 = turtle.Turtle()
 mousetrap3 = turtle.Turtle()
 cheese = turtle.Turtle()
+death = turtle.Turtle()
 
 #defiing user and ai characteristics
 mouse.up()
@@ -48,6 +51,9 @@ mousetrap3.shape("mousetrap.gif")
 #defining cheese characteristics
 cheese.up()
 cheese.shape('cheese.gif')
+death.ht()
+death.up()
+death.shape('gameover.gif')
 
 #setting variable locations
 mouse.goto(100, 0)
@@ -60,6 +66,7 @@ mousetrap3.goto(0, -250)
 
 #setting cheese locations
 cheese.goto(-100, 100)
+death.goto(0, 0)
 
 #code to keep the mouse within the borders
 def border():
@@ -74,24 +81,29 @@ def border():
 
 #code to close the window if the mouse hits a trap       
 def traps():
-    if mouse.xcor() == mousetrap1.xcor() and mouse.ycor() == mousetrap1.ycor():
-        window.bye()
-    if mouse.xcor() == mousetrap2.xcor() and mouse.ycor() == mousetrap2.ycor():
-        window.bye()
-    if mouse.xcor() == mousetrap3.xcor() and mouse.ycor() == mousetrap3.ycor():
-        window.bye()
+    if mouse.distance(mousetrap1) < 10:
+        mouse.ht()
+        death.st()
+    if mouse.distance(mousetrap2) < 10:
+        mouse.ht()
+        death.st()
+    if mouse.distance(mousetrap3) < 10:
+        mouse.ht()
+        death.st()
         
 #code to collect the cheese
 def get_cheese():
-    if mouse.xcor() == cheese.xcor() and mouse.ycor() == cheese.ycor():
+    if mouse.distance(cheese) < 10:
         cheese.ht()
         cheese.goto(random.randint(-300, 300), random.randint(-300, 300))
         cheese.st()
         
 #code to end the game when the mouse is caught
 def eat_mouse():
-    if mouse.xcor() == cat.xcor() and mouse.ycor() == cat.ycor():
-        window.bye()
+    if mouse.distance(cat) < 10:
+        mouse.ht()
+        death.st()
+        
 
 #setting variable basic movement
 def Up():
@@ -147,8 +159,9 @@ follow_runner()
 border()
 traps()
 eat_mouse()
-get_cheese()
+#get_cheese()
 
 window.update()
+window.tracer(1, 0)
 window.listen()
 turtle.done()
