@@ -1,4 +1,4 @@
-# making turtle window
+#making turtle window
 import random
 import turtle
 window = turtle.getscreen()
@@ -10,6 +10,7 @@ window.register_shape('redcat.gif')
 window.register_shape('mousetrap.gif')
 window.register_shape('cheese.gif')
 window.register_shape('gameover.gif')
+window.register_shape('startgame.gif')
 window.tracer(0, 0)
 
 #drawing a border
@@ -29,16 +30,17 @@ mousetrap2 = turtle.Turtle()
 mousetrap3 = turtle.Turtle()
 cheese = turtle.Turtle()
 death = turtle.Turtle()
+start = turtle.Turtle()
 
 #defiing user and ai characteristics
 mouse.up()
 mouse.fillcolor('Blue')
 mouse.shape('bluemouse.gif')
-mouse.speed("fastest")
+mouse.speed(5)
 cat.up()
 cat.fillcolor('Red')
 cat.shape('redcat.gif')
-cat.speed("fastest")
+cat.speed(1)
 
 #defining mousetrap characteristics
 mousetrap1.up()
@@ -54,19 +56,24 @@ cheese.shape('cheese.gif')
 death.ht()
 death.up()
 death.shape('gameover.gif')
+death.ht
+start.ht()
+start.up()
+start.shape('startgame.gif')
 
 #setting variable locations
 mouse.goto(100, 0)
 cat.goto(-100, 0)
 
 #setting mousetrap locations
-mousetrap1.goto(100, 175)
-mousetrap2.goto(-100, -60)
-mousetrap3.goto(0, -250)
+mousetrap1.goto(random.randint(-300, 300), random.randint(-300, 300))
+mousetrap2.goto(random.randint(-300, 300), random.randint(-300, 300))
+mousetrap3.goto(random.randint(-300, 300), random.randint(-300, 300))
 
 #setting cheese locations
-cheese.goto(-100, 100)
+cheese.goto(random.randint(-300, 300), random.randint(-300, 300))
 death.goto(0, 0)
+start.goto(0, 0)
 
 #code to keep the mouse within the borders
 def border():
@@ -81,22 +88,31 @@ def border():
 
 #code to close the window if the mouse hits a trap       
 def traps():
-    if mouse.distance(mousetrap1) < 10:
+    if mouse.distance(mousetrap1) < 20:
         mouse.ht()
         death.st()
-    if mouse.distance(mousetrap2) < 10:
+    if mouse.distance(mousetrap2) < 20:
         mouse.ht()
         death.st()
-    if mouse.distance(mousetrap3) < 10:
+    if mouse.distance(mousetrap3) < 20:
         mouse.ht()
         death.st()
         
 #code to collect the cheese
 def get_cheese():
-    if mouse.distance(cheese) < 10:
+    if mouse.distance(cheese) < 20:
         cheese.ht()
+        mousetrap1.ht()
+        mousetrap2.ht()
+        mousetrap3.ht()
         cheese.goto(random.randint(-300, 300), random.randint(-300, 300))
+        mousetrap1.goto(random.randint(-300, 300), random.randint(-300, 300))
+        mousetrap2.goto(random.randint(-300, 300), random.randint(-300, 300))
+        mousetrap3.goto(random.randint(-300, 300), random.randint(-300, 300))
         cheese.st()
+        mousetrap1.st()
+        mousetrap2.st()
+        mousetrap3.st()
         
 #code to end the game when the mouse is caught
 def eat_mouse():
@@ -143,11 +159,7 @@ def follow_runner():
 def quit():
     window.bye()
 
-#setting score/cheese text variable
-turtle.goto(-300, 300)
-turtle.write("Score: 0")
-turtle.goto(-300, 290)
-turtle.write('Cheeses: 0')
+
     
 #calling my functions
 window.onkeypress(Up, "Up")
@@ -159,9 +171,9 @@ follow_runner()
 border()
 traps()
 eat_mouse()
-#get_cheese()
+get_cheese()
 
-window.update()
 window.tracer(1, 0)
+window.update()
 window.listen()
 turtle.done()
