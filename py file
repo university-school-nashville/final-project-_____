@@ -1,0 +1,179 @@
+#making turtle window
+import random
+import turtle
+window = turtle.getscreen()
+window.screensize = (300, 300)
+window.title('Cat and Mouse!')
+window.bgcolor('PaleGreen')
+window.register_shape('bluemouse.gif')
+window.register_shape('redcat.gif')
+window.register_shape('mousetrap.gif')
+window.register_shape('cheese.gif')
+window.register_shape('gameover.gif')
+window.register_shape('startgame.gif')
+window.tracer(0, 0)
+
+#drawing a border
+turtle.ht()
+turtle.up()
+turtle.goto(300, 300)
+turtle.down()
+for i in range(4):
+    turtle.rt(90)
+    turtle.forward(600)
+
+#creating variables
+mouse = turtle.Turtle()
+cat = turtle.Turtle()
+mousetrap1 = turtle.Turtle()
+mousetrap2 = turtle.Turtle()
+mousetrap3 = turtle.Turtle()
+cheese = turtle.Turtle()
+death = turtle.Turtle()
+start = turtle.Turtle()
+
+#defiing user and ai characteristics
+mouse.up()
+mouse.fillcolor('Blue')
+mouse.shape('bluemouse.gif')
+mouse.speed(5)
+cat.up()
+cat.fillcolor('Red')
+cat.shape('redcat.gif')
+cat.speed(1)
+
+#defining mousetrap characteristics
+mousetrap1.up()
+mousetrap1.shape("mousetrap.gif")
+mousetrap2.up()
+mousetrap2.shape("mousetrap.gif")
+mousetrap3.up()
+mousetrap3.shape("mousetrap.gif")
+
+#defining cheese characteristics
+cheese.up()
+cheese.shape('cheese.gif')
+death.ht()
+death.up()
+death.shape('gameover.gif')
+death.ht
+start.ht()
+start.up()
+start.shape('startgame.gif')
+
+#setting variable locations
+mouse.goto(100, 0)
+cat.goto(-100, 0)
+
+#setting mousetrap locations
+mousetrap1.goto(random.randint(-300, 300), random.randint(-300, 300))
+mousetrap2.goto(random.randint(-300, 300), random.randint(-300, 300))
+mousetrap3.goto(random.randint(-300, 300), random.randint(-300, 300))
+
+#setting cheese locations
+cheese.goto(random.randint(-300, 300), random.randint(-300, 300))
+death.goto(0, 0)
+start.goto(0, 0)
+
+#code to keep the mouse within the borders
+def border():
+    if mouse.xcor() >= 300:
+        mouse.goto(300, mouse.ycor())
+    if mouse.ycor() >= 300:
+        mouse.goto(mouse.xcor(), 300)
+    if mouse.xcor() <= -300:
+        mouse.goto(-300, mouse.ycor())
+    if mouse.ycor() <= -300:
+        mouse.goto(mouse.xcor(), -300)
+
+#code to close the window if the mouse hits a trap       
+def traps():
+    if mouse.distance(mousetrap1) < 20:
+        mouse.ht()
+        death.st()
+    if mouse.distance(mousetrap2) < 20:
+        mouse.ht()
+        death.st()
+    if mouse.distance(mousetrap3) < 20:
+        mouse.ht()
+        death.st()
+        
+#code to collect the cheese
+def get_cheese():
+    if mouse.distance(cheese) < 20:
+        cheese.ht()
+        mousetrap1.ht()
+        mousetrap2.ht()
+        mousetrap3.ht()
+        cheese.goto(random.randint(-300, 300), random.randint(-300, 300))
+        mousetrap1.goto(random.randint(-300, 300), random.randint(-300, 300))
+        mousetrap2.goto(random.randint(-300, 300), random.randint(-300, 300))
+        mousetrap3.goto(random.randint(-300, 300), random.randint(-300, 300))
+        cheese.st()
+        mousetrap1.st()
+        mousetrap2.st()
+        mousetrap3.st()
+        
+#code to end the game when the mouse is caught
+def eat_mouse():
+    if mouse.distance(cat) < 10:
+        mouse.ht()
+        death.st()
+        
+
+#setting variable basic movement
+def Up():
+    mouse.setheading(90)
+    mouse.forward(10)
+    border()
+    traps()
+    eat_mouse()
+    get_cheese()
+def Down():
+    mouse.setheading(270)
+    mouse.forward(10)
+    border()
+    traps()
+    eat_mouse
+    get_cheese()
+def Left():
+    mouse.setheading(180)
+    mouse.forward(10)
+    border()
+    traps()
+    eat_mouse()
+    get_cheese()
+def Right():
+    mouse.setheading(0)
+    mouse.forward(10)
+    border()
+    traps()
+    eat_mouse()
+    get_cheese()
+    
+def follow_runner():
+    cat.setheading(cat.towards(mouse))
+    cat.forward(1)
+    window.ontimer(follow_runner, 10)
+    
+def quit():
+    window.bye()
+
+
+    
+#calling my functions
+window.onkeypress(Up, "Up")
+window.onkeypress(Down, "Down")
+window.onkeypress(Left, "Left")
+window.onkeypress(Right, "Right")
+window.onkey(quit, "space")
+follow_runner()
+border()
+traps()
+eat_mouse()
+get_cheese()
+
+window.tracer(1, 0)
+window.update()
+window.listen()
+turtle.done()
